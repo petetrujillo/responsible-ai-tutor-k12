@@ -64,9 +64,35 @@ Open settings.ini and add your API key:
 api_key = YOUR_GEMINI_API_KEY_HERE
 lesson_file = LessonAILiteracy.txt
 
+
 **4) Run the Application**
 
 **Bash**
 python app.py
 
 Open your browser and navigate to http://localhost:5001.
+
+**Configuration
+**You can customize the tutor's behavior in settings.ini without changing the code20:
+Setting | Description | Default
+- grader_difficulty | Sets how strict the AI is on terminology | (Easy/Normal/Strict).
+- Normalpassing_score | The threshold out of 100 to advance to the next question. | 70
+- max_attempts | How many tries a student gets before "Fallout" triggers. | 2
+- lesson_file | The text file acting as the Knowledge Base. | LessonAILiteracy.txt
+
+**Project Structure**
+- app.py: Main application entry point and route handler.
+- evaluator.py: Logic for sending prompts to Gemini and parsing the JSON response.
+- knowledge_base.py: Loads the curriculum text file.
+- tutor.py: Logic for generating hints and fallout messages.
+- data_logger.py: Handles CSV writing for audit trails.
+- LessonAILiteracy.txt: The sample curriculum - file.📄
+
+**License**
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+**Credits**
+- Capstone Project - Group 6 
+- Authors: Melissa B. Froemming & Peter Trujillo
+- Course: GRAD 589/588 Capstone, Fall 2025
+- This project serves as a technical blueprint for the responsible adoption of AI in K-12 educat
