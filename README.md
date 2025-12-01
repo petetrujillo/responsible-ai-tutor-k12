@@ -34,7 +34,7 @@ The application operates as a Multi-Agent System  powered by Flask and Google Ge
 - Orchestrator (app.py): Manages the web server and session state.
 - Content Manager (knowledge_base.py): Parses the vetted lesson plan.
 - Evaluator Agent (evaluator.py): Uses the LLM to grade answers against the ground truth.
-- Tutor Agent (tutor.py): Generates conversational remediation or hints.
+- Tutor Agent (tutor.py): Generates conversational remediation, provides hints, and answers student follow-up questions (SME mode)
 - Logger (data_logger.py): records session data for analytics.
 
 **Getting Started**
