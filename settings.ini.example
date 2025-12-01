@@ -1,0 +1,10 @@
+[General]
+# Leave empty to use environment variables, or paste key here for local dev
+api_key = YOUR_GEMINI_API_KEY_HERE
+lesson_file = LessonAILiteracy.txt
+
+[Tutor Behavior]
+passing_score = 70
+max_attempts = 2
+max_time_on_question = 120
+grader_difficulty = Normal
