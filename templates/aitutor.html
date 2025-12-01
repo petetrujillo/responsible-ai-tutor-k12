@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tutor Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .main-container {
+            display: flex;
+            width: 95%;
+            max-width: 1400px;
+            height: 95vh;
+            background-color: #f9fafb;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .progress-pane {
+            width: 35%;
+            max-width: 400px;
+            background-color: #e5e7eb;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .progress-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #d1d5db;
+        }
+        .progress-list {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid #d1d5db;
+        }
+        .progress-item-topic {
+            font-weight: 500;
+            color: #374151;
+        }
+        .progress-item-score {
+            font-weight: bold;
+            color: #10b981;
+        }
+        .chat-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background-color: #4b5563;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .chat-history {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .chat-message {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 1.25rem;
+            line-height: 1.5;
+        }
+        .user-message {
+            align-self: flex-end;
+            background-color: #3b82f6;
+            color: white;
+        }
+        .bot-message {
+            align-self: flex-start;
+            background-color: #e5e7eb;
+            color: #1f2937;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 1.5rem;
+            background-color: #f3f4f6;
+            gap: 0.5rem;
+        }
+        .chat-input {
+            flex-grow: 1;
+            border-radius: 1.25rem;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 1rem;
+            background-color: white;
+        }
+        .chat-button {
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 1.25rem;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        .loading-dots { display: flex; justify-content: center; align-items: center; height: 1.5rem; }
+        .loading-dot { width: 0.5rem; height: 0.5rem; background-color: #4b5563; border-radius: 50%; margin: 0 0.25rem; animation: bounce 0.6s infinite alternate; }
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-0.5rem); } }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- The Progress Pane is still here, but hidden for a cleaner chat-only focus -->
+        <!-- You can unhide this later if you want -->
+        <!--
+        <div class="progress-pane">
+            <div class="progress-header">Lesson Progress</div>
+            <div id="progressList" class="progress-list">
+                 ... progress items would go here ... 
+            </div>
+        </div>
+        -->
+        
+        <div class="chat-container">
+            <div class="chat-header">AI Tutor Chatbot</div>
+            <div id="chatHistory" class="chat-history">
+                <!-- Initial message removed, will be added by startQuiz() -->
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="userInput" class="chat-input" placeholder="Type your answer..." />
+                <button id="sendButton" class="chat-button">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatHistory = document.getElementById('chatHistory');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        
+        // --- THIS IS THE FIX ---
+        // The element 'progressList' is commented out in the HTML, so we must comment out the JS that tries to find it.
+        // const progressList = document.getElementById('progressList'); // <-- THIS LINE WAS CRASHING THE SCRIPT
+        
+        // --- NEW: Session ID and State ---
+        const sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        let isQuizActive = false; // Tracks if the quiz has started
+
+        function addMessage(text, sender) {
+            // Format markdown (bold) and newlines
+            const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = formattedText;
+            messageDiv.classList.add('chat-message', sender === 'user' ? 'user-message' : 'bot-message');
+            chatHistory.appendChild(messageDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function showLoadingIndicator() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loadingIndicator';
+            loadingDiv.classList.add('chat-message', 'bot-message', 'loading-dots');
+            loadingDiv.innerHTML = `<div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div>`;
+            chatHistory.appendChild(loadingDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+            return loadingDiv;
+        }
+        
+        // --- THIS FUNCTION IS NO LONGER USED ---
+        // async function updateProgressDashboard() { ... }
+
+        // --- NEW FUNCTION: startQuiz ---
+        async function startQuiz() {
+            if (isQuizActive) return; // Don't start twice
+            
+            const loadingIndicator = showLoadingIndicator();
+            isQuizActive = true; // Set flag
+            
+            try {
+                const response = await fetch('/api/start', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+                const result = await response.json();
+                
+                loadingIndicator.remove();
+                
+                // Display the first set of messages
+                await displayBotMessages(result);
+
+            } catch (error) {
+                console.error("Error starting quiz:", error);
+                loadingIndicator.remove();
+                addMessage("❌ **Connection Error!** Could not start the quiz. Please make sure the Python server is running and refresh the page.", 'bot');
+            }
+        }
+        
+        // --- NEW FUNCTION: sendAnswer ---
+        async function sendAnswer(query) {
+            if (!isQuizActive) return; // Don't send if quiz isn't started
+            
+            const loadingIndicator = showLoadingIndicator();
+            
+            try {
+                const response = await fetch('/api/ask', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ answer: query, session_id: sessionId })
+                });
+
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                     throw new Error(`Server error: ${result.details || result.error}`);
+                }
+
+                loadingIndicator.remove();
+                
+                // Display the response messages
+                await displayBotMessages(result);
+
+            } catch (error) {
+                console.error("Error connecting to server:", error);
+                loadingIndicator.remove();
+                addMessage(`❌ **Connection Error!** ${error.message}. Please check the server logs.`, 'bot');
+            }
+        }
+        
+        // --- NEW HELPER: displayBotMessages (Handles formatting) ---
+        async function displayBotMessages(result) {
+            
+            // This function posts a message if it's not empty
+            const postMessage = async (text) => {
+                if (!text || text.trim().toLowerCase() === 'none') return;
+
+                const loading = showLoadingIndicator();
+                await new Promise(resolve => setTimeout(resolve, 500)); // Short delay
+                loading.remove();
+                addMessage(text, 'bot');
+                await new Promise(resolve => setTimeout(resolve, 1000)); // "Typing" delay
+            };
+            
+            // --- THIS IS THE NEW FORMATTING LOGIC ---
+            if (result.evaluation_text) {
+                let formattedEvaluation = result.evaluation_text;
+                
+                // Check if there are scores to append
+                if (result.scores && result.scores.final !== undefined) {
+                    const scores = result.scores;
+                    formattedEvaluation += `<br><br><strong>Score: ${scores.final}/100</strong> (Correctness: ${scores.correctness}, Explanation: ${scores.explanation})`;
+                }
+                await postMessage(formattedEvaluation);
+            }
+            // --- END OF NEW FORMATTING LOGIC ---
+
+            // Display the other parts as separate messages
+            await postMessage(result.remediation_text);
+            await postMessage(result.sme_answer);
+            await postMessage(result.next_question);
+        }
+
+        // --- UPDATED: handleSend (The main user action) ---
+        function handleSend() {
+            const query = userInput.value.trim();
+            if (query === '') return;
+            
+            addMessage(query, 'user');
+            userInput.value = '';
+            
+            if (!isQuizActive) {
+                // This is the first message, start the quiz
+                // We ignore the query text and just start
+                startQuiz();
+            } else {
+                // Quiz is active, send the answer
+                sendAnswer(query);
+            }
+        }
+
+        sendButton.addEventListener('click', handleSend);
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+        
+        // --- NEW: Start the quiz as soon as the page loads ---
+        // We remove the "Hello! Type anything to start" message
+        // and just start the quiz immediately.
+        startQuiz();
+ 
+    </script>
+</body>
+</html>
+
