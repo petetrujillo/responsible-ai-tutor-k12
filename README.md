@@ -56,8 +56,8 @@ cd responsible-ai-tutor-k12
 pip install -r requirements.txt
 
 **3) Configure the Application**
-Rename settings.ini.example to settings.ini.
-Open settings.ini and add your API key:
+- Rename settings.ini.example to settings.ini.
+- Open settings.ini and add your API key:
 
 **Ini, TOML**
 [General]
