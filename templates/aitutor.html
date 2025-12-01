@@ -127,17 +127,7 @@
 </head>
 <body>
     <div class="main-container">
-        <!-- The Progress Pane is still here, but hidden for a cleaner chat-only focus -->
-        <!-- You can unhide this later if you want -->
-        <!--
-        <div class="progress-pane">
-            <div class="progress-header">Lesson Progress</div>
-            <div id="progressList" class="progress-list">
-                 ... progress items would go here ... 
-            </div>
-        </div>
-        -->
-        
+
         <div class="chat-container">
             <div class="chat-header">AI Tutor Chatbot</div>
             <div id="chatHistory" class="chat-history">
@@ -155,11 +145,6 @@
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('sendButton');
         
-        // --- THIS IS THE FIX ---
-        // The element 'progressList' is commented out in the HTML, so we must comment out the JS that tries to find it.
-        // const progressList = document.getElementById('progressList'); // <-- THIS LINE WAS CRASHING THE SCRIPT
-        
-        // --- NEW: Session ID and State ---
         const sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
         let isQuizActive = false; // Tracks if the quiz has started
 
@@ -183,10 +168,7 @@
             return loadingDiv;
         }
         
-        // --- THIS FUNCTION IS NO LONGER USED ---
-        // async function updateProgressDashboard() { ... }
-
-        // --- NEW FUNCTION: startQuiz ---
+      
         async function startQuiz() {
             if (isQuizActive) return; // Don't start twice
             
@@ -215,7 +197,7 @@
             }
         }
         
-        // --- NEW FUNCTION: sendAnswer ---
+   
         async function sendAnswer(query) {
             if (!isQuizActive) return; // Don't send if quiz isn't started
             
@@ -248,10 +230,9 @@
             }
         }
         
-        // --- NEW HELPER: displayBotMessages (Handles formatting) ---
+      
         async function displayBotMessages(result) {
             
-            // This function posts a message if it's not empty
             const postMessage = async (text) => {
                 if (!text || text.trim().toLowerCase() === 'none') return;
 
@@ -262,7 +243,6 @@
                 await new Promise(resolve => setTimeout(resolve, 1000)); // "Typing" delay
             };
             
-            // --- THIS IS THE NEW FORMATTING LOGIC ---
             if (result.evaluation_text) {
                 let formattedEvaluation = result.evaluation_text;
                 
@@ -273,15 +253,13 @@
                 }
                 await postMessage(formattedEvaluation);
             }
-            // --- END OF NEW FORMATTING LOGIC ---
-
-            // Display the other parts as separate messages
+            
             await postMessage(result.remediation_text);
             await postMessage(result.sme_answer);
             await postMessage(result.next_question);
         }
 
-        // --- UPDATED: handleSend (The main user action) ---
+      
         function handleSend() {
             const query = userInput.value.trim();
             if (query === '') return;
@@ -291,7 +269,6 @@
             
             if (!isQuizActive) {
                 // This is the first message, start the quiz
-                // We ignore the query text and just start
                 startQuiz();
             } else {
                 // Quiz is active, send the answer
@@ -304,7 +281,6 @@
             if (e.key === 'Enter') handleSend();
         });
         
-        // --- NEW: Start the quiz as soon as the page loads ---
         // We remove the "Hello! Type anything to start" message
         // and just start the quiz immediately.
         startQuiz();
