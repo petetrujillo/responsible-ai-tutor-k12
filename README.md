@@ -65,6 +65,8 @@ api_key = YOUR_GEMINI_API_KEY_HERE
 lesson_file = LessonAILiteracy.txt
 
 **4 Run the Application**
+
 **Bash**
 python app.py
+
 Open your browser and navigate to http://localhost:5001.
