@@ -1,0 +1,87 @@
+Topic: What is an Algorithm?
+Answer:
+An algorithm is a precise, step-by-step set of instructions or rules designed to perform a specific task or solve a problem, much like a detailed recipe for baking cookies that lists ingredients, mixing steps, and baking time to produce the final treat. In AI, algorithms process input data through these steps to generate an output.
+
+Topic: What is Artificial Intelligence (AI)?
+Answer:
+Artificial Intelligence (AI) is the branch of computer science focused on creating systems that can perform tasks requiring human-like intelligence. It consists of three key components: a dataset for learning, a learning algorithm to find patterns, and a prediction or output. Unlike traditional code with fixed rules, AI adapts and improves with experience.
+
+Topic: What is the difference between Narrow AI and General AI?
+Answer:
+The AI we have today is called Artificial Narrow Intelligence (ANI). This type of AI is very smart, but only at one specific job (like playing chess). In contrast, Artificial General Intelligence (AGI) is a type of AI seen in movies that can think and feel like a human. For now, AGI is science fiction.
+
+Topic: What is a Dataset?
+Answer:
+A dataset is a structured collection of data points, like images, texts, or numbers, used to train AI models. It functions like a textbook for the AI. To be effective, datasets must be large and diverse. If a dataset lacks diversity, the AI will fail to recognize things it hasn't seen before.
+
+Topic: What is Training?
+Answer:
+Training is the process where an AI model learns from a dataset by adjusting itself to minimize errors. It is like a student practicing math problems repeatedly. During training, the model processes examples to detect patterns. This can take days or weeks on powerful computers.
+
+Topic: What is Testing?
+Answer:
+Testing evaluates a trained model's performance on new, unseen data. It is like a pop quiz to see if the AI truly understands the concept or just memorized the training data. If an AI does well on training but fails testing, it has "overfit" the data.
+
+Topic: What is Supervised Learning?
+Answer:
+Supervised Learning is a type of machine learning where we give the AI data that is labeled. For example, we feed the AI millions of pictures, each one labeled "This is a dog" or "This is a cat." By studying these, the AI learns to identify dogs and cats in new pictures.
+
+Topic: What is Unsupervised Learning?
+Answer:
+Unsupervised Learning is used when data isn't labeled. The AI’s job is to find hidden patterns and group similar things together on its own. It's like dumping a box of mixed LEGO bricks on the floor and sorting them into piles based on color or shape without any instructions.
+
+Topic: What is Reinforcement Learning?
+Answer:
+Reinforcement Learning is a method based on trial and error. The AI learns by performing actions and receiving rewards or punishments. It is similar to teaching a dog a trick: when it gets it right, it gets a treat (reward). This is often used to teach AI to play video games.
+
+Topic: What is Deep Learning?
+Answer:
+Deep Learning is a specialized type of AI that uses Artificial Neural Networks with many "hidden layers." Each layer learns to recognize a different level of detail, from simple edges to complex shapes. This allows computers to do hard tasks like understanding speech or driving cars.
+
+Topic: Why are GPUs important for AI?
+Answer:
+Training a large AI model requires a huge amount of math to be done very quickly. Graphics Processing Units (GPUs) are specialized computer chips that can do many simple tasks all at once (parallel processing), making them perfect for training AI.
+
+Topic: What is "the cloud"?
+Answer:
+"The cloud" refers to huge data centers full of powerful computers connected to the internet. Most large AI models are too big to run on your phone, so they run in the cloud. Your phone sends a request, the cloud does the work, and sends the answer back.
+
+Topic: What is Generative AI?
+Answer:
+Generative AI is a type of AI that creates brand new, original content. It doesn't just analyze; it makes things. Examples include image generators like DALL-E or chatbots like ChatGPT and Gemini.
+
+Topic: What is a Large Language Model (LLM)?
+Answer:
+A Large Language Model (LLM) is the engine behind chatbots. It is a massive deep learning model trained on the internet's text. Its main job is to predict the next word in a sentence, which allows it to generate human-like responses, answer questions, and summarize text.
+
+Topic: What is a "prompt"?
+Answer:
+A prompt is the input or instruction you give to a Generative AI. "Prompt Engineering" is the skill of writing clear, detailed prompts to get the best result. For example, "a dog" is a bad prompt; "a happy golden retriever in a park" is a good prompt.
+
+Topic: What are AI Hallucinations?
+Answer:
+Hallucinations occur when a Generative AI confidently states something that is completely false or made up. This happens because the AI is predicting words, not checking facts. Always verify important information from AI with reliable sources.
+
+Topic: What is Algorithmic Bias?
+Answer:
+Algorithmic bias occurs when an AI produces unfair outcomes due to skewed training data or design flaws. It is the "garbage in, garbage out" principle. For example, if a hiring AI is trained mostly on resumes from men, it might unfairly reject women.
+
+Topic: What is a Stakeholder?
+Answer:
+A stakeholder is anyone affected by an AI system. For a social media algorithm, stakeholders include the users (who want fun), the parents (who want safety), and the company (who wants profit). Ethical AI tries to balance the needs of all stakeholders.
+
+Topic: What is Optimization?
+Answer:
+Optimization is the process of tuning an algorithm to achieve the "best" outcome. However, "best" is subjective. If a video app optimizes only for "time spent watching," it might show addictive or extreme content, which hurts the user's well-being.
+
+Topic: What are Unintended Consequences?
+Answer:
+Unintended consequences are unexpected outcomes from an AI. For example, social media was designed to connect people, but an unintended consequence was the creation of "echo chambers" where people only hear views they agree with.
+
+Topic: What are Deepfakes?
+Answer:
+Deepfakes are AI-generated videos or audio that realistically mimic real people saying or doing things they never did. While they can be used for movies, they are dangerous because they can spread misinformation or ruin reputations.
+
+Topic: What is Privacy in AI?
+Answer:
+AI systems often collect vast amounts of data to work. Privacy concerns arise when this data is collected without consent or used to track people. It is important to be mindful of sharing personal details like addresses or passwords with AI bots.
