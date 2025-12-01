@@ -5,7 +5,8 @@ The Instructional AI Tutor is a Python-based educational platform designed to br
 
 Designed specifically for the developmental needs of secondary students (grades 6-12), the system uses Retrieval-Augmented Generation (RAG) to restrict AI responses to vetted, district-approved curriculum materials, effectively eliminating hallucinations and ensuring content safety.
 
-**Key Features**
+**Key Features:**
+
 **Governance & Safety**
 - Restricted Content (RAG): The AI is "leashed" to a local Knowledge Base (e.g., LessonAILiteracy.txt), preventing it from inventing facts or accessing the open internet for answers.
 - Privacy by Design: Built to align with FERPA/COPPA mandates, ensuring student data is handled with strict role-based constraints.
