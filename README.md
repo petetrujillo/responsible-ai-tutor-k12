@@ -46,7 +46,7 @@ Prerequisites
 
 **1 Clone the repository**
 
-*Bash**
+**Bash**
 git clone https://github.com/yourusername/responsible-ai-tutor-k12.git
 cd responsible-ai-tutor-k12
 
