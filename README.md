@@ -44,18 +44,18 @@ Prerequisites
 
 **Installation**
 
-**1 Clone the repository**
+**1) Clone the repository**
 
 **Bash**
 git clone https://github.com/yourusername/responsible-ai-tutor-k12.git
 cd responsible-ai-tutor-k12
 
-**2 Install dependencies**
+**2) Install dependencies**
 
 **Bash**
 pip install -r requirements.txt
 
-**3 Configure the Application**
+**3) Configure the Application**
 Rename settings.ini.example to settings.ini.
 Open settings.ini and add your API key:
 
@@ -64,7 +64,7 @@ Open settings.ini and add your API key:
 api_key = YOUR_GEMINI_API_KEY_HERE
 lesson_file = LessonAILiteracy.txt
 
-**4 Run the Application**
+**4) Run the Application**
 
 **Bash**
 python app.py
