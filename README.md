@@ -1,3 +1,13 @@
+**Production-Ready AI Tutor Platform with FERPA/COPPA Compliance**
+Complete functional specification + working prototype for an explainable AI tutor platform. Includes:
+-30+ pages of user stories, acceptance criteria, and metrics definitions
+-Multi-agent Python/Flask backend with dual-axis scoring engine
+-NIST AI RMF compliance framework
+-Live demo + persona dashboards
+
+**Built in 4 months as principal architect. Ready for district procurement or startup build-out.**
+
+
 **Responsible AI Tutor for K-12**
 A Governance-First, Multi-Agent Tutoring System for Secondary Education
 
